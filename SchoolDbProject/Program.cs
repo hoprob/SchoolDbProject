@@ -1,16 +1,17 @@
 ﻿using System;
-//TODO add to github
+//TODO Snygga till utskrifter!
+
 //TODO➡️ Det måste finnas en meny där man kan välja att visa olika data som efterfrågas av skolan. (I Console Bara till EF funktioner).
-
-//TODO➡️ Skolan vill kunna ta fram en översikt över all personal där det framgår namn och vilka   befattningar dem har samt hur många år de har arbetat på skolan. Administratören vill också ha möjlighet att spara ny personal. (SQL i SSMS)
-
-//TODO➡️ Vi vill spara elever och se vilken klass de läser i. Vi vill kunna spara betyg för en elev i varje kurs de läst och vi vill kunna se vilken lärare som satt betyget. Betyg ska också ha ett datum som de sats.(SQL i SSMS)
 
 //TODO➡️ Hur många lärare jobbar på de olika avdelningarna?(EF VS)
 
 //TODO➡️ Visa information om alla elever (EF VS)
 
 //TODO➡️ Visa en lista på alla aktiva kurser (EF VS)
+
+//TODO➡️ Skolan vill kunna ta fram en översikt över all personal där det framgår namn och vilka befattningar dem har samt hur många år de har arbetat på skolan. Administratören vill också ha möjlighet att spara ny personal. (SQL i SSMS)
+
+//TODO➡️ Vi vill spara elever och se vilken klass de läser i. Vi vill kunna spara betyg för en elev i varje kurs de läst och vi vill kunna se vilken lärare som satt betyget. Betyg ska också ha ett datum som de sats.(SQL i SSMS)
 
 //TODO➡️ Hur mycket betalar respektive avdelning ut i lön varje månad?(SQL SSMS)
 
@@ -31,7 +32,8 @@ namespace SchoolDbProject
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Menu menu = new Menu();
+            menu.StartMenu();
         }
     }
 }
