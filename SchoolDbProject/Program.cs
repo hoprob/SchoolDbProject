@@ -1,4 +1,5 @@
 ﻿using System;
+//TODO Kolla över så att menyvalen och funtionenrna gör det dem ska, hämtar rätt information osv..
 //TODO Snygga till utskrifter!
 
 //TODO➡️ Det måste finnas en meny där man kan välja att visa olika data som efterfrågas av skolan. (I Console Bara till EF funktioner).

@@ -80,6 +80,11 @@ namespace SchoolDbProject.Models
                     .HasForeignKey(d => d.FstudentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__tblCourse__FStud__33D4B598");
+
+                entity.HasOne(d => d.Fteacher)
+                    .WithMany(p => p.CourseGrade)
+                    .HasForeignKey(d => d.FteacherId)
+                    .HasConstraintName("FK_CourseGrade_Employee");
             });
 
             modelBuilder.Entity<Employee>(entity =>

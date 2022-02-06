@@ -19,5 +19,6 @@ namespace SchoolDbProject.Models
         public virtual Course Fcourse { get; set; }
         public virtual Grade Fgrade { get; set; }
         public virtual Student Fstudent { get; set; }
+        public virtual Employee Fteacher { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace SchoolDbProject.Models
         public Employee()
         {
             Course = new HashSet<Course>();
+            CourseGrade = new HashSet<CourseGrade>();
         }
 
         public int EmpId { get; set; }
@@ -23,5 +24,6 @@ namespace SchoolDbProject.Models
 
         public virtual Role Frole { get; set; }
         public virtual ICollection<Course> Course { get; set; }
+        public virtual ICollection<CourseGrade> CourseGrade { get; set; }
     }
 }

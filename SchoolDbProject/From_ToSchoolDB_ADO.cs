@@ -17,7 +17,7 @@ namespace SchoolDbProject
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT EmpFname, EmpLname, Role.EmpRole" +
+                using (SqlCommand command = new SqlCommand("SELECT EmpFname, EmpLname, Role.EmpRole, DATEDIFF(YEAR, HiringDate, GETDATE())" +
                     " FROM Employee JOIN Role ON Employee.FroleId = Role.RoleId", connection))
                 {
                     SqlDataReader reader = command.ExecuteReader();
@@ -26,7 +26,8 @@ namespace SchoolDbProject
                         string fName = reader.GetString(0);
                         string lName = reader.GetString(1);
                         string role = reader.GetString(2);
-                        string emp = fName + " " + lName + "-------------" + role;
+                        int yearsHired = reader.GetInt32(3);
+                        string emp = fName + " " + lName + "-------------" + role + "    Antal år anställd: " + yearsHired;//TODO Gör snyggare utskrift!!Kanske spara i nytt objekt..
                         employees.Add(emp);
                     }
                     reader.Close();

@@ -18,11 +18,11 @@ namespace SchoolDbProject
             {
                 return (from Student in Context.Student orderby Student.StudentFname ascending select Student).ToList<Student>();
             }
-            else if(name == OrderBy.FirstName && asceDesc == OrderBy.Decending)
+            else if (name == OrderBy.FirstName && asceDesc == OrderBy.Decending)
             {
                 return (from Student in Context.Student orderby Student.StudentFname descending select Student).ToList<Student>();
             }
-            else if(name == OrderBy.LastName && asceDesc == OrderBy.Ascending)
+            else if (name == OrderBy.LastName && asceDesc == OrderBy.Ascending)
             {
                 return (from Student in Context.Student orderby Student.StudentLname ascending select Student).ToList<Student>();
             }
@@ -41,7 +41,7 @@ namespace SchoolDbProject
         public List<Student> GetClassStudents(int classId)
         {
             using SchoolDbProjectContext Context = new SchoolDbProjectContext();
-            return (from Student in Context.Student where Student.FclassId == classId select Student).ToList<Student>();           
+            return (from Student in Context.Student where Student.FclassId == classId select Student).ToList<Student>();
         }
         //Get list of employee roles
         public List<Role> GetEmpRoles()
@@ -49,12 +49,26 @@ namespace SchoolDbProject
             using SchoolDbProjectContext Context = new SchoolDbProjectContext();
             return (from Role in Context.Role orderby Role.RoleId ascending select Role).ToList<Role>();
         }
-     
+
         //Get names of the different grades
         public List<Grade> GetGradeNames()
         {
             using SchoolDbProjectContext Context = new SchoolDbProjectContext();
             return (from Grade in Context.Grade orderby Grade.GradeId ascending select Grade).ToList<Grade>();
+        }
+        public void GetTeacherSubjectInfo()
+        {
+            List<string> TeacherSubjectInfoList = new List<string>();
+            using SchoolDbProjectContext Context = new SchoolDbProjectContext();
+            var TeacherSubjectinfo = from Course in Context.Course group Course by
+                                     new { Course.CourseName, Course.FteacherId} into CourseName select new 
+                                     { Course = CourseName.Key.CourseName, Teacher = CourseName.Key.FteacherId };
+            foreach (var item in TeacherSubjectinfo)
+            {
+                int teacherCount = item.Teacher.HasValue ? 1 : 0;
+                TeacherSubjectInfoList.Add(item.Course + " " + teacherCount);
+            }
+            Console.ReadLine();
         }
     }
 }

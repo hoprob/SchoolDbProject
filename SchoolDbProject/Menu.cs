@@ -188,7 +188,8 @@ namespace SchoolDbProject
                         }
                         break;
                     case "3":
-                        //TODO Funktion för att se antal lärare på respektive avdelning
+                        //List<string> TeacherSubjectInfo = 
+                            FromDb.GetTeacherSubjectInfo();
                         Console.Clear();
                         break;
                     case "4":
