@@ -95,5 +95,11 @@ namespace SchoolDbProject
             }
             return RoleDict;
         }
+        public ICollection<Course> GetActiveCourses()
+        {
+            using SchoolDbProjectContext Context = new SchoolDbProjectContext();
+            ICollection<Course> activeCourses = (from Course in Context.Course where Course.IsActive == true select Course).ToList<Course>();
+            return activeCourses;   
+        }
     }
 }

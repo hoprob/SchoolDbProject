@@ -234,7 +234,15 @@ namespace SchoolDbProject
                         break;
                     case "3":
                         Console.Clear();
-                        //TODO Lägg till emtod för att se alla aktiva kurser
+                        ICollection<Course> activeCourses = FromDb.GetActiveCourses();
+                        string active;
+                        foreach (Course course in activeCourses)
+                        {
+                            active = Convert.ToBoolean(course.IsActive) ? "Aktiv" : "Ej Aktiv";//TODO bättre utskrift!!!
+                            Console.WriteLine($"Kurs: {course.CourseName}     Status: {active}");
+                        }
+                        Console.ReadKey();
+                        Console.Clear();
                         break;
                     case "4":
                         Console.Clear();
