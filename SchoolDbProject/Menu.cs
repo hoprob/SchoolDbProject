@@ -188,8 +188,13 @@ namespace SchoolDbProject
                         }
                         break;
                     case "3":
-                        //List<string> TeacherSubjectInfo = 
-                            FromDb.GetTeacherSubjectInfo();
+                        Console.Clear();
+                        Dictionary<string, int> EmpRoleCount = FromDb.GetRoleEmployeeCount();
+                        foreach (var item in EmpRoleCount)
+                        {
+                            Console.WriteLine($"Avdelning: {item.Key}  Antal anställda: {item.Value}");//TODO skriv bättre utskrift
+                        }
+                        Console.ReadKey();
                         Console.Clear();
                         break;
                     case "4":
