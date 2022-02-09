@@ -26,8 +26,8 @@ namespace SchoolDbProject
                         string fName = reader.GetString(0);
                         string lName = reader.GetString(1);
                         string role = reader.GetString(2);
-                        int yearsHired = reader.GetInt32(3); //TODO Add hiring date when adding new employees!
-                        string emp = fName + "###" + lName + "###" + role + "###" + yearsHired;//TODO Gör snyggare utskrift!!Kanske spara i nytt objekt..
+                        int yearsHired = reader.GetInt32(3);
+                        string emp = fName + "###" + lName + "###" + role + "###" + yearsHired;
                         employees.Add(emp);
                     }
                     reader.Close();
@@ -67,7 +67,7 @@ namespace SchoolDbProject
                 using(SqlCommand command = new SqlCommand("SELECT StudentFName+' '+ StudentLName, CourseName, GradeName FROM CourseGrade " +
                     "JOIN Student ON CourseGrade.FStudentId = Student.StudentId " +
                     "JOIN Course ON CourseGrade.FCourseId = Course.CourseId " +
-                    "JOIN Grade ON tCourseGrade.FGradeId = Grade.GradeId " +
+                    "JOIN Grade ON CourseGrade.FGradeId = Grade.GradeId " +
                     "WHERE DATEDIFF(DAY, GradeDate, GETDATE()) < " + days, connection))
                 {
                     SqlDataReader reader = command.ExecuteReader();

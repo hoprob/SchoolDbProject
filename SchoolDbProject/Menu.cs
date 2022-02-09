@@ -181,13 +181,15 @@ namespace SchoolDbProject
                                 continue;
                             }
                             Console.Clear();
-                            Console.WriteLine("\t************************************");
-                            Console.WriteLine($"\t*          Alla {roleList[roleId - 1].EmpRole}          *");
-                            Console.WriteLine("\t************************************\n");
+                            Console.WriteLine("\t╔══════════════════════════════╗");
+                            Console.WriteLine(String.Format("\t║{0, -30}║", $"ALLA {roleList[roleId - 1].EmpRole.ToUpper()}"));
+                            Console.WriteLine("\t╠══════════════════════════════╣");
                             foreach (var emp in ADO.GetEmployees(roleId))
                             {
-                                Console.WriteLine($"\t{emp}");
+                                Console.WriteLine(String.Format("\t║{0, -30}║", emp));
+                                Console.WriteLine("\t║──────────────────────────────║");
                             }
+                            Console.WriteLine("\t╚══════════════════════════════╝");
                             Console.ReadKey();
                             Console.Clear();
                             roleMenuBool = false;
@@ -247,11 +249,16 @@ namespace SchoolDbProject
                         Console.Clear();
                         ICollection<Course> activeCourses = FromDb.GetActiveCourses();
                         string active;
+                        Console.WriteLine("\t╔════════════════════════════════════╗");
+                        Console.WriteLine(String.Format("\t║{0, -20}│{1, -15}║", "KURS", "STATUS"));
+                        Console.WriteLine("\t╠════════════════════════════════════╣");
                         foreach (Course course in activeCourses)
                         {
-                            active = Convert.ToBoolean(course.IsActive) ? "Aktiv" : "Ej Aktiv";//TODO bättre utskrift!!!
-                            Console.WriteLine($"Kurs: {course.CourseName}     Status: {active}");
+                            active = Convert.ToBoolean(course.IsActive) ? "Aktiv" : "Ej Aktiv";
+                            Console.WriteLine(String.Format("\t║{0, -20}│{1, 15}║", course.CourseName, active));
+                            Console.WriteLine("\t║────────────────────────────────────║");
                         }
+                        Console.WriteLine("\t╚════════════════════════════════════╝");
                         Console.ReadKey();
                         Console.Clear();
                         break;
@@ -442,7 +449,13 @@ namespace SchoolDbProject
                 string firstName = Console.ReadLine();
                 Console.Write("\n\tMata in efternamn: ");
                 string lastName = Console.ReadLine();
-                ToDb.AddEmployee(firstName, lastName, roleId);
+                Console.Write($"\n\tMata in vilken månadslön {firstName} skall ha: ");
+                decimal salary;
+                while(!Decimal.TryParse(Console.ReadLine(), out salary))
+                {
+                    Console.Write("\tERROR! Du måste skriva in lön med siffror!\n\tFörsök igen: ");
+                }
+                ToDb.AddEmployee(firstName, lastName, roleId, salary);
                 Console.WriteLine("\n\t\tAnställd tillagd i databasen!");
                 Thread.Sleep(2000);
                 Console.Clear();
@@ -509,9 +522,7 @@ namespace SchoolDbProject
                 Thread.Sleep(2000);
                 Console.Clear();
                 menuBool = false;
-            }
-            
-            
+            }           
         }
     }
 }
