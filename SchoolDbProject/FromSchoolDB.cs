@@ -56,41 +56,15 @@ namespace SchoolDbProject
             using SchoolDbProjectContext Context = new SchoolDbProjectContext();
             return (from Grade in Context.Grade orderby Grade.GradeId ascending select Grade).ToList<Grade>();
         }
-        //Get numbre of teachers in subject
-        public void GetTeacherSubjectInfo()
-        {
-            List<string> TeacherSubjectInfoList = new List<string>();
-            using SchoolDbProjectContext Context = new SchoolDbProjectContext();
-            var TeacherSubjectinfo = from Course in Context.Course group Course by
-                                     new { Course.CourseName, Course.FteacherId} into CourseName select new 
-                                     { Course = CourseName.Key.CourseName, Teacher = CourseName.Key.FteacherId };
-            foreach (var item in TeacherSubjectinfo)
-            {
-                int teacherCount = item.Teacher.HasValue ? 1 : 0;
-                TeacherSubjectInfoList.Add(item.Course + " " + teacherCount);
-            }
-            Console.ReadLine(); 
-        }
         public Dictionary<string, int> GetRoleEmployeeCount()
         {
             using SchoolDbProjectContext Context = new SchoolDbProjectContext();
             Dictionary<string, int> RoleDict = new Dictionary<string, int>(); 
             List<Role> Roles = (from Role in Context.Role select Role).ToList<Role>();
-            //var Employees = from Employee in Context.Employee select Employee;
             var countEmp = from Employee in Context.Employee group Employee by Employee.FroleId into EmpCount select new { RoleId = EmpCount.Key, Count = EmpCount.Count() };
             foreach (var item in countEmp)
             {
-                //int count = 
-                //int count = (from Employee in Employees where Employee.FroleId == item.RoleId select Employee).Count();
-                string role = "";
-                foreach (var empRole in Roles)
-                {
-                    if (empRole.RoleId == item.RoleId)
-                    {
-                        role = empRole.EmpRole;
-                        break;
-                    }
-                }
+                string role = Roles.Find(r => r.RoleId == item.RoleId).EmpRole;         
                 RoleDict.Add(role, item.Count);
             }
             return RoleDict;

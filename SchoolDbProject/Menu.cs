@@ -138,16 +138,22 @@ namespace SchoolDbProject
                 Console.WriteLine("\n\tVälj hur du vill se listan:\n");
                 Console.WriteLine("\t[1] Se information om all personal");
                 Console.WriteLine("\t[2] Se personal inom en yrkesroll");
-                Console.WriteLine("\t[3] Visa antal lärare på avdelningar");
+                Console.WriteLine("\t[3] Visa antal anställda på avdelningar");
                 Console.WriteLine("\t[4] Gå tillbaka");
                 switch (Console.ReadLine())
                 {
                     case "1":
                         Console.Clear();
+                        Console.WriteLine("\t╔═════════════════════════════════════════════════════════╗");
+                        Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -15}║", "NAMN", "AVDELNING", "ÅR ANSTÄLLD"));
+                        Console.WriteLine("\t╠═════════════════════════════════════════════════════════╣");
                         foreach (var emp in ADO.GetEmployees())
                         {
-                            Console.WriteLine($"\t{emp}");
+                            string[] empArr = emp.Split("###");
+                            Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, 15}║", empArr[0] +" "+ empArr[1], empArr[2], empArr[3]));
+                            Console.WriteLine("\t║─────────────────────────────────────────────────────────║");
                         }
+                        Console.WriteLine("\t╚═════════════════════════════════════════════════════════╝");
                         Console.ReadKey();
                         Console.Clear();
                         break;
@@ -190,10 +196,15 @@ namespace SchoolDbProject
                     case "3":
                         Console.Clear();
                         Dictionary<string, int> EmpRoleCount = FromDb.GetRoleEmployeeCount();
+                        Console.WriteLine("\t╔════════════════════════════════════╗");
+                        Console.WriteLine(String.Format("\t║{0, -20}│{1, -15}║", "AVDELNING", "ANTAL ANSTÄLLDA"));
+                        Console.WriteLine("\t╠════════════════════════════════════╣");
                         foreach (var item in EmpRoleCount)
                         {
-                            Console.WriteLine($"Avdelning: {item.Key}  Antal anställda: {item.Value}");//TODO skriv bättre utskrift
+                            Console.WriteLine(String.Format("\t║{0, -20}│{1, 15}║", item.Key, item.Value));
+                            Console.WriteLine("\t║────────────────────────────────────║");
                         }
+                        Console.WriteLine("\t╚════════════════════════════════════╝");
                         Console.ReadKey();
                         Console.Clear();
                         break;
@@ -356,10 +367,15 @@ namespace SchoolDbProject
         private void PrintStudents(OrderBy name, OrderBy order)
         {
             Console.Clear();
+            Console.WriteLine("\t╔══════════════════════════════════════════════════════════════╗");
+            Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -20}║", "FÖRNAMN", "EFTERNAMN", "PERSONNUMMER"));
+            Console.WriteLine("\t╠══════════════════════════════════════════════════════════════╣");
             foreach (var student in FromDb.GetStudents(name, order))
             {
-                Console.WriteLine($"{student.StudentFname} {student.StudentLname} {student.StudentSocSecNum}");
+                Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -20}║", student.StudentFname, student.StudentLname, student.StudentSocSecNum));
+                Console.WriteLine("\t║──────────────────────────────────────────────────────────────║");
             }
+            Console.WriteLine("\t╚══════════════════════════════════════════════════════════════╝");
             Console.ReadKey();
             Console.Clear();
         }

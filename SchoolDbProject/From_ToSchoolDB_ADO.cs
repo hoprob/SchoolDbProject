@@ -26,8 +26,8 @@ namespace SchoolDbProject
                         string fName = reader.GetString(0);
                         string lName = reader.GetString(1);
                         string role = reader.GetString(2);
-                        int yearsHired = reader.GetInt32(3);
-                        string emp = fName + " " + lName + "-------------" + role + "    Antal år anställd: " + yearsHired;//TODO Gör snyggare utskrift!!Kanske spara i nytt objekt..
+                        int yearsHired = reader.GetInt32(3); //TODO Add hiring date when adding new employees!
+                        string emp = fName + "###" + lName + "###" + role + "###" + yearsHired;//TODO Gör snyggare utskrift!!Kanske spara i nytt objekt..
                         employees.Add(emp);
                     }
                     reader.Close();
