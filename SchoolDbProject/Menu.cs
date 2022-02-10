@@ -145,7 +145,7 @@ namespace SchoolDbProject
                     case "1":
                         Console.Clear();
                         Console.WriteLine("\t╔═════════════════════════════════════════════════════════╗");
-                        Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -15}║", "NAMN", "AVDELNING", "ÅR ANSTÄLLD"));
+                        Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -15}║", "        NAMN", "     AVDELNING", "  ÅR ANSTÄLLD"));
                         Console.WriteLine("\t╠═════════════════════════════════════════════════════════╣");
                         foreach (var emp in ADO.GetEmployees())
                         {
@@ -182,7 +182,7 @@ namespace SchoolDbProject
                             }
                             Console.Clear();
                             Console.WriteLine("\t╔══════════════════════════════╗");
-                            Console.WriteLine(String.Format("\t║{0, -30}║", $"ALLA {roleList[roleId - 1].EmpRole.ToUpper()}"));
+                            Console.WriteLine(String.Format("\t║{0, -30}║", $"          ALLA {roleList[roleId - 1].EmpRole.ToUpper()}"));
                             Console.WriteLine("\t╠══════════════════════════════╣");
                             foreach (var emp in ADO.GetEmployees(roleId))
                             {
@@ -199,7 +199,7 @@ namespace SchoolDbProject
                         Console.Clear();
                         Dictionary<string, int> EmpRoleCount = FromDb.GetRoleEmployeeCount();
                         Console.WriteLine("\t╔════════════════════════════════════╗");
-                        Console.WriteLine(String.Format("\t║{0, -20}│{1, -15}║", "AVDELNING", "ANTAL ANSTÄLLDA"));
+                        Console.WriteLine(String.Format("\t║{0, -20}│{1, -15}║", "     AVDELNING", "ANTAL ANSTÄLLDA"));
                         Console.WriteLine("\t╠════════════════════════════════════╣");
                         foreach (var item in EmpRoleCount)
                         {
@@ -250,7 +250,7 @@ namespace SchoolDbProject
                         ICollection<Course> activeCourses = FromDb.GetActiveCourses();
                         string active;
                         Console.WriteLine("\t╔════════════════════════════════════╗");
-                        Console.WriteLine(String.Format("\t║{0, -20}│{1, -15}║", "KURS", "STATUS"));
+                        Console.WriteLine(String.Format("\t║{0, -20}│{1, -15}║", "        KURS", "    STATUS"));
                         Console.WriteLine("\t╠════════════════════════════════════╣");
                         foreach (Course course in activeCourses)
                         {
@@ -382,7 +382,7 @@ namespace SchoolDbProject
                 Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -20}║", student.StudentFname, student.StudentLname, student.StudentSocSecNum));
                 Console.WriteLine("\t║──────────────────────────────────────────────────────────────║");
             }
-            Console.WriteLine("\t╚══════════════════════════════════════════════════════════════╝");
+            Console.WriteLine("\t╚══════════════════════════════════════════════════════════════╝");           
             Console.ReadKey();
             Console.Clear();
         }
@@ -410,13 +410,15 @@ namespace SchoolDbProject
                     continue;
                 }
                 Console.Clear();
-                Console.WriteLine("\t************************************");
-                Console.WriteLine($"\t*       Eleverna i {classList[classId - 1].ClassName} är:       *");
-                Console.WriteLine("\t************************************\n");
+                Console.WriteLine("\t╔═════════════════════════╗");
+                Console.WriteLine(String.Format("\t║{0, -25}║", $"     ELEVER I {classList[classId - 1].ClassName}"));
+                Console.WriteLine("\t╠═════════════════════════╣");
                 foreach (var student in FromDb.GetClassStudents(classId))
                 {
-                    Console.WriteLine($"\t{student.StudentFname} {student.StudentLname}");
+                    Console.WriteLine(String.Format("\t║{0, -25}║", student.StudentFname+" "+student.StudentLname));
+                    Console.WriteLine("\t║─────────────────────────║");
                 }
+                Console.WriteLine("\t╚═════════════════════════╝");
                 Console.ReadKey();
                 Console.Clear();
                 menuBool = false;
@@ -464,27 +466,35 @@ namespace SchoolDbProject
         }
         private void GetGrades()
         {
-            Console.WriteLine("\t************************************");
-            Console.WriteLine("\t*            Betygen den           *");
-            Console.WriteLine("\t*          Senaste månaden         *");
-            Console.WriteLine("\t************************************\n");
+            Console.WriteLine("\t╔════════════════════════════════════════════════════╗");
+            Console.WriteLine(String.Format("\t║{0, -52}║", "              BETYG DEN SENASTE MÅNADEN"));
+            Console.WriteLine("\t╠════════════════════════════════════════════════════╣");
+            Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -10}║", "        ELEV", "        KURS", "  BETYG"));
+            Console.WriteLine("\t╠════════════════════════════════════════════════════╣");
             foreach (var grade in ADO.GetGrades(31))
             {
-                Console.WriteLine(grade);
+                string[] gradeArray = grade.Split("###");
+                Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -10}║", gradeArray[0], gradeArray[1], gradeArray[2]));
+                Console.WriteLine("\t║────────────────────────────────────────────────────║");
             }
+            Console.WriteLine("\t╚════════════════════════════════════════════════════╝");
             Console.ReadKey();
             Console.Clear();
         }
         private void GetGradesStatistics()
         {
-            Console.WriteLine("\t************************************");
-            Console.WriteLine("\t*      Kurser med statistik        *");
-            Console.WriteLine("\t*            På betyg              *");
-            Console.WriteLine("\t************************************\n");
+            Console.WriteLine("\t╔═════════════════════════════════════════════════════╗");
+            Console.WriteLine(String.Format("\t║{0, -53}║", "               KURSER MED BETYGSSTATISTIK"));
+            Console.WriteLine("\t╠═════════════════════════════════════════════════════╣");
+            Console.WriteLine(String.Format("\t║{0, -20}│{1, -10}│{2, -10}│{3, -10}║", "        KURS", "GENOMSNITT", "   MAX", "   MIN"));
+            Console.WriteLine("\t╠═════════════════════════════════════════════════════╣");
             foreach (var grade in ADO.GetGradeStatstics())
             {
-                Console.WriteLine(grade);
+                string[] gradeArray = grade.Split("###");
+                Console.WriteLine(String.Format("\t║{0, -20}│{1, -10}│{2, -10}│{3, -10}║", gradeArray[0], gradeArray[1], gradeArray[2], gradeArray[3]));
+                Console.WriteLine("\t║─────────────────────────────────────────────────────║");
             }
+            Console.WriteLine("\t╚═════════════════════════════════════════════════════╝");
             Console.ReadKey();
             Console.Clear();
         }

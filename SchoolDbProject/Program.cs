@@ -1,6 +1,4 @@
 ﻿using System;
-//TODO Snygga till utskrifter!
-
 /*TODO⚙ Extra utmaningar
 1-Visa information om en elev, vilken klass han tillhör och vilken/vilka lärare han har samt vilka betyg han har fått i en kurs.(SQL)
 2 - Skapa en View som visar alla lärare och vilka utbildningar som dom ansvarar för.(SQL i SSMS)

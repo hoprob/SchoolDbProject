@@ -60,7 +60,6 @@ namespace SchoolDbProject
         public List<string> GetGrades(int days)
         {
             List<string> grades = new List<string>();
-            grades.Add(String.Format("\t{0, -20}{1,-20}{2,-5}\n", "Elev", "Kurs", "Betyg"));
             using(SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -76,7 +75,7 @@ namespace SchoolDbProject
                         string name = reader.GetString(0);
                         string courseName = reader.GetString(1);
                         string grade = reader.GetString(2);
-                        grades.Add(String.Format("\t{0, -20} {1,-20} {2,-5}", name, courseName, grade));
+                        grades.Add(name+"###"+courseName+"###"+grade);
                     }
                     reader.Close();
                 }
@@ -86,7 +85,6 @@ namespace SchoolDbProject
         public List<string> GetGradeStatstics()
         {
             List<string> grades = new List<string>();
-            grades.Add(String.Format("\t{0, -20}{1,-12}{2,-8}{3,-8}\n", "Kurs", "Genomsnitt", "Max", "Min"));
             FromSchoolDB FromDb = new FromSchoolDB();
             List<Grade> gradeNames = FromDb.GetGradeNames();
             using(SqlConnection connection = new SqlConnection(connectionString))
@@ -102,7 +100,7 @@ namespace SchoolDbProject
                         int avg = reader.GetInt32(1);
                         int max = reader.GetInt32(2);
                         int min = reader.GetInt32(3);
-                        grades.Add(String.Format("\t{0, -20}{1,-12}{2,-8}{3,-8}\n", courseName, gradeNames[avg-1].GradeName, gradeNames[max-1].GradeName, gradeNames[min-1].GradeName));
+                        grades.Add(courseName + "###" + gradeNames[avg-1].GradeName + "###" + gradeNames[max-1].GradeName + "###" + gradeNames[min-1].GradeName);
                     }
                     reader.Close();
                 }
