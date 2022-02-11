@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using SchoolDbProject.Models;
-using System.Linq;
-
 namespace SchoolDbProject
 {
     internal class ToSchoolDB
     {
         //Add a new employee to Db
-        public void AddEmployee(string firstName, string lastName, int roleId, decimal salary)
+        public void AddEmployee(string firstName, string lastName, int roleId,
+            decimal salary)
         {
             using SchoolDbProjectContext Context = new SchoolDbProjectContext();
             Employee emp = new Employee()

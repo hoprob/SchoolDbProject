@@ -1,9 +1,7 @@
 ﻿using System;
 using SchoolDbProject.Models;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
-
 namespace SchoolDbProject
 {
     internal class Menu
@@ -21,31 +19,6 @@ namespace SchoolDbProject
         {
             bool isRunning = true;
             while(isRunning)
-            /* MENY
-* Personalinformation
-*           --Se all personal med antal år anställda
-            --Se personal inom en yrkesroll
-*           --Visa antal lärare på olika avdelningar
-*           Visa lönestatistik
-* Elevinformation
-*            --Visa information om alla elever
-*            --Visa information om elever i en klass
-*            Visa information eom en specifik elev
-* Kurs- och betyginformation
-*           --Visa betyg satta senaste månaden
-*           --Visa kurser med betygsstatistik
-*           --Visa alla aktiva kurser
-* Administrera personal
-*           --Lägg till en anställd
-* Administerra elever
-*           Lägg till betyg för elev
-//➡️ Det måste finnas en meny där man kan välja att visa olika data som efterfrågas av skolan. (I Console Bara till EF funktioner).
-
-//➡️ Hur många lärare jobbar på de olika avdelningarna?(EF VS)
-
-//➡️ Visa information om alla elever (EF VS)
-
-//➡️ Visa en lista på alla aktiva kurser (EF VS)*/
             {
                 Console.WriteLine("\t************************************");
                 Console.WriteLine("\t*             Välkommen            *");
@@ -86,7 +59,8 @@ namespace SchoolDbProject
                         break;
                     default:
                         Console.Clear();
-                        Console.WriteLine("\n\t\tERROR! Du måste skriva in en siffra mellan 1 och 6!");
+                        Console.WriteLine("\n\t\tERROR! Du måste skriva in en" +
+                            " siffra mellan 1 och 6!");
                         break;
                 }
             }
@@ -120,7 +94,8 @@ namespace SchoolDbProject
                         break;
                     default:
                         Console.Clear();
-                        Console.WriteLine("\n\t\tERROR! Du måste skriva in en siffra mellan 1 och 3!");
+                        Console.WriteLine("\n\t\tERROR! Du måste skriva in en" +
+                            " siffra mellan 1 och 3!");
                         break;
                 }
             }           
@@ -144,16 +119,24 @@ namespace SchoolDbProject
                 {
                     case "1":
                         Console.Clear();
-                        Console.WriteLine("\t╔═════════════════════════════════════════════════════════╗");
-                        Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -15}║", "        NAMN", "     AVDELNING", "  ÅR ANSTÄLLD"));
-                        Console.WriteLine("\t╠═════════════════════════════════════════════════════════╣");
+                        Console.WriteLine("\t╔════════════════════════════════" +
+                            "═════════════════════════╗");
+                        Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}" +
+                            "│{2, -15}║", "        NAMN", "     AVDELNING",
+                            "  ÅR ANSTÄLLD"));
+                        Console.WriteLine("\t╠════════════════════════════════" +
+                            "═════════════════════════╣");
                         foreach (var emp in ADO.GetEmployees())
                         {
                             string[] empArr = emp.Split("###");
-                            Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, 15}║", empArr[0] +" "+ empArr[1], empArr[2], empArr[3]));
-                            Console.WriteLine("\t║─────────────────────────────────────────────────────────║");
+                            Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│" +
+                                "{2, 15}║", empArr[0] +" "+ empArr[1], empArr[2],
+                                empArr[3]));
+                            Console.WriteLine("\t║────────────────────────────" +
+                                "─────────────────────────────║");
                         }
-                        Console.WriteLine("\t╚═════════════════════════════════════════════════════════╝");
+                        Console.WriteLine("\t╚════════════════════════════════" +
+                            "═════════════════════════╝");
                         Console.ReadKey();
                         Console.Clear();
                         break;
@@ -166,18 +149,22 @@ namespace SchoolDbProject
                             Console.WriteLine("\t*            Hämta lista           *");
                             Console.WriteLine("\t*       På Personal(yrkesroll)     *");
                             Console.WriteLine("\t************************************");
-                            Console.WriteLine("\n\tVälj vilken yrkesroll du vill se:\n");
+                            Console.WriteLine("\n\tVälj vilken yrkesroll du vill" +
+                                " se:\n");
                             List<Role> roleList = FromDb.GetEmpRoles();
                             foreach (var role in roleList)
                             {
-                                Console.WriteLine($"\t[{role.RoleId}] {role.EmpRole}");
+                                Console.WriteLine($"\t[{role.RoleId}]" +
+                                    $" {role.EmpRole}");
                             }
                             string input = Console.ReadLine();
                             int roleId;
-                            if (!Int32.TryParse(input, out roleId) || roleId < 1 || roleId > roleList.Count)
+                            if (!Int32.TryParse(input, out roleId) || roleId < 1 
+                                || roleId > roleList.Count)
                             {
                                 Console.Clear();
-                                Console.WriteLine($"\n\tERROR! Du måste skriva en siffra mellan 1 och {roleList.Count}");
+                                Console.WriteLine($"\n\tERROR! Du måste skriva" +
+                                    $" en siffra mellan 1 och {roleList.Count}");
                                 continue;
                             }
                             Console.Clear();
@@ -186,10 +173,13 @@ namespace SchoolDbProject
                             Console.WriteLine("\t╠══════════════════════════════╣");
                             foreach (var emp in ADO.GetEmployees(roleId))
                             {
-                                Console.WriteLine(String.Format("\t║{0, -30}║", emp));
-                                Console.WriteLine("\t║──────────────────────────────║");
+                                Console.WriteLine(String.Format("\t║{0, -30}║",
+                                    emp));
+                                Console.WriteLine("\t║─────────────────────────" +
+                                    "─────║");
                             }
-                            Console.WriteLine("\t╚══════════════════════════════╝");
+                            Console.WriteLine("\t╚═════════════════════════════" +
+                                "═╝");
                             Console.ReadKey();
                             Console.Clear();
                             roleMenuBool = false;
@@ -197,16 +187,23 @@ namespace SchoolDbProject
                         break;
                     case "3":
                         Console.Clear();
-                        Dictionary<string, int> EmpRoleCount = FromDb.GetRoleEmployeeCount();
-                        Console.WriteLine("\t╔════════════════════════════════════╗");
-                        Console.WriteLine(String.Format("\t║{0, -20}│{1, -15}║", "     AVDELNING", "ANTAL ANSTÄLLDA"));
-                        Console.WriteLine("\t╠════════════════════════════════════╣");
+                        Dictionary<string, int> EmpRoleCount =
+                            FromDb.GetRoleEmployeeCount();
+                        Console.WriteLine("\t╔════════════════════════════════" +
+                            "════╗");
+                        Console.WriteLine(String.Format("\t║{0, -20}│{1, -15}║"
+                            , "     AVDELNING", "ANTAL ANSTÄLLDA"));
+                        Console.WriteLine("\t╠════════════════════════════════" +
+                            "════╣");
                         foreach (var item in EmpRoleCount)
                         {
-                            Console.WriteLine(String.Format("\t║{0, -20}│{1, 15}║", item.Key, item.Value));
-                            Console.WriteLine("\t║────────────────────────────────────║");
+                            Console.WriteLine(String.Format("\t║{0, -20}│{1, 15}" +
+                                "║", item.Key, item.Value));
+                            Console.WriteLine("\t║────────────────────────────" +
+                                "────────║");
                         }
-                        Console.WriteLine("\t╚════════════════════════════════════╝");
+                        Console.WriteLine("\t╚═════════════════════════════════" +
+                            "═══╝");
                         Console.ReadKey();
                         Console.Clear();
                         break;
@@ -216,7 +213,8 @@ namespace SchoolDbProject
                         break;
                     default:
                         Console.Clear();
-                        Console.WriteLine("\n\t\tERROR! Du måste skriva in en siffra mellan 1 och 4!");
+                        Console.WriteLine("\n\t\tERROR! Du måste skriva in en " +
+                            "siffra mellan 1 och 4!");
                         break;
                 }
             }
@@ -249,16 +247,23 @@ namespace SchoolDbProject
                         Console.Clear();
                         ICollection<Course> activeCourses = FromDb.GetActiveCourses();
                         string active;
-                        Console.WriteLine("\t╔════════════════════════════════════╗");
-                        Console.WriteLine(String.Format("\t║{0, -20}│{1, -15}║", "        KURS", "    STATUS"));
-                        Console.WriteLine("\t╠════════════════════════════════════╣");
+                        Console.WriteLine("\t╔════════════════════════════════" +
+                            "════╗");
+                        Console.WriteLine(String.Format("\t║{0, -20}│{1, -15}║"
+                            , "        KURS", "    STATUS"));
+                        Console.WriteLine("\t╠════════════════════════════════" +
+                            "════╣");
                         foreach (Course course in activeCourses)
                         {
-                            active = Convert.ToBoolean(course.IsActive) ? "Aktiv" : "Ej Aktiv";
-                            Console.WriteLine(String.Format("\t║{0, -20}│{1, 15}║", course.CourseName, active));
-                            Console.WriteLine("\t║────────────────────────────────────║");
+                            active = Convert.ToBoolean(course.IsActive) ?
+                                "Aktiv" : "Ej Aktiv";
+                            Console.WriteLine(String.Format("\t║{0, -20}│{1, 15}" +
+                                "║", course.CourseName, active));
+                            Console.WriteLine("\t║─────────────────────────────" +
+                                "───────║");
                         }
-                        Console.WriteLine("\t╚════════════════════════════════════╝");
+                        Console.WriteLine("\t╚═════════════════════════════════" +
+                            "═══╝");
                         Console.ReadKey();
                         Console.Clear();
                         break;
@@ -268,7 +273,8 @@ namespace SchoolDbProject
                         break;
                     default:
                         Console.Clear();
-                        Console.WriteLine("\n\t\tERROR! Du måste skriva in en siffra mellan 1 och 4!");
+                        Console.WriteLine("\n\t\tERROR! Du måste skriva in en" +
+                            " siffra mellan 1 och 4!");
                         break;
                 }
             }
@@ -297,7 +303,8 @@ namespace SchoolDbProject
                         break;
                     default:
                         Console.Clear();
-                        Console.WriteLine("\n\t\tERROR! Du måste skriva in en siffra mellan 1 och 2!");
+                        Console.WriteLine("\n\t\tERROR! Du måste skriva in en" +
+                            " siffra mellan 1 och 2!");
                         break;
                 }
             }
@@ -326,7 +333,8 @@ namespace SchoolDbProject
                         break;
                     default:
                         Console.Clear();
-                        Console.WriteLine("\n\t\tERROR! Du måste skriva in en siffra mellan 1 och 2!");
+                        Console.WriteLine("\n\t\tERROR! Du måste skriva in en" +
+                            " siffra mellan 1 och 2!");
                         break;
                 }
             }
@@ -366,7 +374,8 @@ namespace SchoolDbProject
                         break;
                     default:
                         Console.Clear();
-                        Console.WriteLine("\n\t\tERROR! Du måste skriva in en siffra mellan 1 och 5!");
+                        Console.WriteLine("\n\t\tERROR! Du måste skriva in en" +
+                            " siffra mellan 1 och 5!");
                         break;
                 }
             }
@@ -374,15 +383,22 @@ namespace SchoolDbProject
         private void PrintStudents(OrderBy name, OrderBy order)
         {
             Console.Clear();
-            Console.WriteLine("\t╔══════════════════════════════════════════════════════════════╗");
-            Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -20}║", "FÖRNAMN", "EFTERNAMN", "PERSONNUMMER"));
-            Console.WriteLine("\t╠══════════════════════════════════════════════════════════════╣");
+            Console.WriteLine("\t╔══════════════════════════════════════════" +
+                "════════════════════╗");
+            Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -20}║",
+                "FÖRNAMN", "EFTERNAMN", "PERSONNUMMER"));
+            Console.WriteLine("\t╠═══════════════════════════════════════════" +
+                "═══════════════════╣");
             foreach (var student in FromDb.GetStudents(name, order))
             {
-                Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -20}║", student.StudentFname, student.StudentLname, student.StudentSocSecNum));
-                Console.WriteLine("\t║──────────────────────────────────────────────────────────────║");
+                Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -20}" +
+                    "║", student.StudentFname, student.StudentLname,
+                    student.StudentSocSecNum));
+                Console.WriteLine("\t║─────────────────────────────────────────" +
+                    "─────────────────────║");
             }
-            Console.WriteLine("\t╚══════════════════════════════════════════════════════════════╝");           
+            Console.WriteLine("\t╚════════════════════════════════════════════" +
+                "══════════════════╝");           
             Console.ReadKey();
             Console.Clear();
         }
@@ -395,27 +411,33 @@ namespace SchoolDbProject
                 Console.WriteLine("\t*         Hämta alla elever        *");
                 Console.WriteLine("\t*           Från en klass          *");
                 Console.WriteLine("\t************************************");
-                Console.WriteLine("\n\tVälj vilken klass du vill hämta elever från:");
+                Console.WriteLine("\n\tVälj vilken klass du vill hämta elever " +
+                    "från:");
                 List<SchoolClass> classList = FromDb.GetClassList();
                 foreach (var classItem in classList)
                 {
-                    Console.WriteLine($"\t[{classItem.ClassId}] {classItem.ClassName}");
+                    Console.WriteLine($"\t[{classItem.ClassId}]" +
+                        $" {classItem.ClassName}");
                 }
                 string input = Console.ReadLine();
                 int classId;
-                if (!Int32.TryParse(input, out classId)|| classId > classList.Count || Convert.ToInt32(input) < 1)
+                if (!Int32.TryParse(input, out classId)||
+                    classId > classList.Count || Convert.ToInt32(input) < 1)
                 {
                     Console.Clear();
-                    Console.WriteLine($"\n\tERROR! Du måste skriva en siffra mellan 1 och {classList.Count}");
+                    Console.WriteLine($"\n\tERROR! Du måste skriva en siffra " +
+                        $"mellan 1 och {classList.Count}");
                     continue;
                 }
                 Console.Clear();
                 Console.WriteLine("\t╔═════════════════════════╗");
-                Console.WriteLine(String.Format("\t║{0, -25}║", $"     ELEVER I {classList[classId - 1].ClassName}"));
+                Console.WriteLine(String.Format("\t║{0, -25}║", $" " +
+                    $"    ELEVER I {classList[classId - 1].ClassName}"));
                 Console.WriteLine("\t╠═════════════════════════╣");
                 foreach (var student in FromDb.GetClassStudents(classId))
                 {
-                    Console.WriteLine(String.Format("\t║{0, -25}║", student.StudentFname+" "+student.StudentLname));
+                    Console.WriteLine(String.Format("\t║{0, -25}║",
+                        student.StudentFname+" "+student.StudentLname));
                     Console.WriteLine("\t║─────────────────────────║");
                 }
                 Console.WriteLine("\t╚═════════════════════════╝");
@@ -433,7 +455,8 @@ namespace SchoolDbProject
                 Console.WriteLine("\t*           Lägga till en          *");
                 Console.WriteLine("\t*             Anställd             *");
                 Console.WriteLine("\t************************************\n");
-                Console.WriteLine("\tVälj vilken typ av anställd du vill lägga till: \n");
+                Console.WriteLine("\tVälj vilken typ av anställd du vill lägga" +
+                    " till: \n");
                 List<Role> roleList = FromDb.GetEmpRoles();   
                 foreach (var role in roleList)
                 {
@@ -441,21 +464,25 @@ namespace SchoolDbProject
                 }
                 string input = Console.ReadLine();
                 int roleId;
-                if (!Int32.TryParse(input, out roleId) || roleId < 1 || roleId > roleList.Count)
+                if (!Int32.TryParse(input, out roleId) || roleId < 1 ||
+                    roleId > roleList.Count)
                 {
                     Console.Clear();
-                    Console.WriteLine($"\n\tERROR! Du måste skriva en siffra mellan 1 och {roleList.Count}");
+                    Console.WriteLine($"\n\tERROR! Du måste skriva en siffra" +
+                        $" mellan 1 och {roleList.Count}");
                     continue;
                 }
                 Console.Write("\tMata in förnamn: ");
                 string firstName = Console.ReadLine();
                 Console.Write("\n\tMata in efternamn: ");
                 string lastName = Console.ReadLine();
-                Console.Write($"\n\tMata in vilken månadslön {firstName} skall ha: ");
+                Console.Write($"\n\tMata in vilken månadslön {firstName} skall" +
+                    $" ha: ");
                 decimal salary;
                 while(!Decimal.TryParse(Console.ReadLine(), out salary))
                 {
-                    Console.Write("\tERROR! Du måste skriva in lön med siffror!\n\tFörsök igen: ");
+                    Console.Write("\tERROR! Du måste skriva in lön med" +
+                        " siffror!\n\tFörsök igen: ");
                 }
                 ToDb.AddEmployee(firstName, lastName, roleId, salary);
                 Console.WriteLine("\n\t\tAnställd tillagd i databasen!");
@@ -466,35 +493,52 @@ namespace SchoolDbProject
         }
         private void GetGrades()
         {
-            Console.WriteLine("\t╔════════════════════════════════════════════════════╗");
-            Console.WriteLine(String.Format("\t║{0, -52}║", "              BETYG DEN SENASTE MÅNADEN"));
-            Console.WriteLine("\t╠════════════════════════════════════════════════════╣");
-            Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -10}║", "        ELEV", "        KURS", "  BETYG"));
-            Console.WriteLine("\t╠════════════════════════════════════════════════════╣");
+            Console.WriteLine("\t╔════════════════════════════════════════════" +
+                "════════╗");
+            Console.WriteLine(String.Format("\t║{0, -52}║",
+                "              BETYG DEN SENASTE MÅNADEN"));
+            Console.WriteLine("\t╠════════════════════════════════════════════" +
+                "════════╣");
+            Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -10}║",
+                "        ELEV", "        KURS", "  BETYG"));
+            Console.WriteLine("\t╠════════════════════════════════════════════" +
+                "════════╣");
             foreach (var grade in ADO.GetGrades(31))
             {
                 string[] gradeArray = grade.Split("###");
-                Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -10}║", gradeArray[0], gradeArray[1], gradeArray[2]));
-                Console.WriteLine("\t║────────────────────────────────────────────────────║");
+                Console.WriteLine(String.Format("\t║{0, -20}│{1, -20}│{2, -10}" +
+                    "║", gradeArray[0], gradeArray[1], gradeArray[2]));
+                Console.WriteLine("\t║────────────────────────────────────────" +
+                    "────────────║");
             }
-            Console.WriteLine("\t╚════════════════════════════════════════════════════╝");
+            Console.WriteLine("\t╚════════════════════════════════════════════" +
+                "════════╝");
             Console.ReadKey();
             Console.Clear();
         }
         private void GetGradesStatistics()
         {
-            Console.WriteLine("\t╔═════════════════════════════════════════════════════╗");
-            Console.WriteLine(String.Format("\t║{0, -53}║", "               KURSER MED BETYGSSTATISTIK"));
-            Console.WriteLine("\t╠═════════════════════════════════════════════════════╣");
-            Console.WriteLine(String.Format("\t║{0, -20}│{1, -10}│{2, -10}│{3, -10}║", "        KURS", "GENOMSNITT", "   MAX", "   MIN"));
-            Console.WriteLine("\t╠═════════════════════════════════════════════════════╣");
+            Console.WriteLine("\t╔════════════════════════════════════════════" +
+                "═════════╗");
+            Console.WriteLine(String.Format("\t║{0, -53}║",
+                "               KURSER MED BETYGSSTATISTIK"));
+            Console.WriteLine("\t╠═════════════════════════════════════════════" +
+                "════════╣");
+            Console.WriteLine(String.Format("\t║{0, -20}│{1, -10}│{2, -10}│" +
+                "{3, -10}║", "        KURS", "GENOMSNITT", "   MAX", "   MIN"));
+            Console.WriteLine("\t╠════════════════════════════════════════════" +
+                "═════════╣");
             foreach (var grade in ADO.GetGradeStatstics())
             {
                 string[] gradeArray = grade.Split("###");
-                Console.WriteLine(String.Format("\t║{0, -20}│{1, -10}│{2, -10}│{3, -10}║", gradeArray[0], gradeArray[1], gradeArray[2], gradeArray[3]));
-                Console.WriteLine("\t║─────────────────────────────────────────────────────║");
+                Console.WriteLine(String.Format("\t║{0, -20}│{1, -10}│{2, -10}│" +
+                    "{3, -10}║", gradeArray[0], gradeArray[1], gradeArray[2],
+                    gradeArray[3]));
+                Console.WriteLine("\t║───────────────────────────────────────" +
+                    "──────────────║");
             }
-            Console.WriteLine("\t╚═════════════════════════════════════════════════════╝");
+            Console.WriteLine("\t╚═══════════════════════════════════════════" +
+                "══════════╝");
             Console.ReadKey();
             Console.Clear();
         }
@@ -507,18 +551,22 @@ namespace SchoolDbProject
                 Console.WriteLine("\t*           Lägg till ny           *");
                 Console.WriteLine("\t*               Elev               *");
                 Console.WriteLine("\t************************************\n");
-                Console.WriteLine("\tVälj vilken klass du vill lägga till eleven i: \n");
+                Console.WriteLine("\tVälj vilken klass du vill lägga till" +
+                    " eleven i: \n");
                 List<SchoolClass> classList = FromDb.GetClassList();
                 foreach (var classItem in classList)
                 {
-                    Console.WriteLine($"\t[{classItem.ClassId}] {classItem.ClassName}");
+                    Console.WriteLine($"\t[{classItem.ClassId}]" +
+                        $" {classItem.ClassName}");
                 }
                 string input = Console.ReadLine();
                 int classId;
-                if (!Int32.TryParse(input, out classId) || classId > classList.Count || Convert.ToInt32(input) < 1)
+                if (!Int32.TryParse(input, out classId) ||
+                    classId > classList.Count || Convert.ToInt32(input) < 1)
                 {
                     Console.Clear();
-                    Console.WriteLine($"\n\tERROR! Du måste skriva en siffra mellan 1 och {classList.Count}");
+                    Console.WriteLine($"\n\tERROR! Du måste skriva en siffra" +
+                        $" mellan 1 och {classList.Count}");
                     continue;
                 }
                 Console.Write("\tMata in förnamn: ");
